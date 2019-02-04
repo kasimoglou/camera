@@ -24,8 +24,12 @@ Template.viewfinder.rendered = function() {
     if (navigator.mozGetUserMedia) {
       video.mozSrcObject = stream;
     } else {
-      var vendorURL = window.URL || window.webkitURL;
-      video.src = vendorURL.createObjectURL(stream);
+      try {
+        video.srcObject = stream;
+      } catch (error) {
+        var vendorURL = window.URL || window.webkitURL;
+        video.src = vendorURL.createObjectURL(stream);
+      }
     }
     video.play();
 
